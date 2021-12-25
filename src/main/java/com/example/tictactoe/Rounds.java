@@ -79,14 +79,17 @@ public class Rounds {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private boolean filterByChar(List<Position> positions, char letter) {
+    private boolean filterByChar(List<Position> positions, char character) {
         return positions.stream()
-                .filter(position -> position.letter() == letter)
+                .filter(position -> getLetterOrDigit(position, character) == character)
                 .count() == BOARD_SIZE;
     }
     private boolean filterByPosition(List<Position> positions, Position position) {
         return positions.stream()
                 .filter(pos -> pos.equals(position))
                 .count() == 1;
+    }
+    private char getLetterOrDigit(Position position, char character){
+        return Character.isDigit(character) ? position.number() : position.letter();
     }
 }

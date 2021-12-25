@@ -3,16 +3,16 @@ package com.example.tictactoe.game;
 import com.example.tictactoe.Rounds;
 import com.example.tictactoe.endings.APlayerWonTheGame;
 import com.example.tictactoe.endings.GameEndWithADraw;
-import com.example.tictactoe.endings.PositionPlaceOcuppied;
+import com.example.tictactoe.endings.PositionPlaceOccupied;
 
 public class Game {
 
     private Player turn;
-    private final Rounds positions;
+    private final Rounds rounds;
 
     private Game(){
         this.turn = Player.X;
-        this.positions = new Rounds();
+        this.rounds = new Rounds();
     }
     public static Game start() {
         return new Game();
@@ -22,16 +22,16 @@ public class Game {
         return turn;
     }
 
-    public void play(Position position) throws PositionPlaceOcuppied {
-        if (positions.isPositionOcuppied(position)){
-            throw new PositionPlaceOcuppied();
+    public void play(Position position) throws PositionPlaceOccupied {
+        if (rounds.isPositionOcuppied(position)){
+            throw new PositionPlaceOccupied(position);
         }
-        this.positions.playRound(position, turnOfPlayer());
-        if (positions.areFull()){
+        this.rounds.playRound(position, turnOfPlayer());
+        if (rounds.areFull()){
             throw new GameEndWithADraw();
         }
-        if (positions.thereIsAWinner().isPresent()){
-            throw new APlayerWonTheGame();
+        if (rounds.thereIsAWinner().isPresent()){
+            throw new APlayerWonTheGame(rounds.thereIsAWinner().get());
         }
         this.turn = oppositePlayer();
     }
@@ -43,7 +43,4 @@ public class Game {
         return Player.X;
     }
 
-    public Player isWinnedBy() {
-        return Player.X;
-    }
 }

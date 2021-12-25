@@ -28,6 +28,9 @@ public enum Position {
     public char letter() {
         return this.value.charAt(0);
     }
+    public char number() {
+        return this.value.charAt(1);
+    }
     public Position value(){
         return fromValue(this.value);
     }
